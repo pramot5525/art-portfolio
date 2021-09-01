@@ -56,7 +56,7 @@
                               <li>Utilized Golang Framework and GraphQL to create APIs and improve the speed</li>
                             </ul>
                         </div>
-                        <div class="flex-shrink-0"><span class="text-primary">March 2013 - Present</span></div>
+                        <div class="flex-shrink-0"><span class="text-primary">Aug 2020 - Present</span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
@@ -71,7 +71,7 @@
                             </ul>
 
                         </div>
-                        <div class="flex-shrink-0"><span class="text-primary">December 2011 - March 2013</span></div>
+                        <div class="flex-shrink-0"><span class="text-primary">July 2016 - July 2020</span></div>
                     </div>
 
                 </div>
