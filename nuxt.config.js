@@ -12,12 +12,19 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700' },
+      { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i' }
+    ],
+    script: [{
+      src: 'https://use.fontawesome.com/releases/v5.15.3/js/all.js',
+      crossorigin: "anonymous"
+    }]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '~assets/styles.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -31,6 +38,9 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
+    ['@nuxtjs/eslint-module', {
+      fix: true
+    }]
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
