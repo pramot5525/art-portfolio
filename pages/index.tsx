@@ -450,8 +450,7 @@ export default function Home() {
           <span className="footer-copy">© 2025 Pramot Natemanee · Bangkok, Thailand</span>
           <div className="footer-links">
             <a href="mailto:pramot.nn@gmail.com">pramot.nn@gmail.com</a>
-            <a href="tel:+66868687813">086-868-7813</a>
-            <a href="https://github.com/pramot5525" target="_blank" rel="noreferrer">GitHub</a>
+<a href="https://github.com/pramot5525" target="_blank" rel="noreferrer">GitHub</a>
             <a href="https://www.linkedin.com/in/pramot-natemanee-579581174/" target="_blank" rel="noreferrer">LinkedIn</a>
           </div>
         </div>
