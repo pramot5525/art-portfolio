@@ -397,83 +397,227 @@ body {
 /* ── 3-D tilt card ── */
 .tilt-card { will-change: transform; }
 
-/* ── Skills ── */
-.skills-grid {
+/* ── Skills Dashboard ── */
+.skill-dashboard {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-  gap: 1rem;
+  grid-template-columns: 252px 1fr;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  min-height: 310px;
 }
-.skill-card {
+.skill-nav {
+  border-right: 1px solid var(--border);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  background: rgba(13,17,23,0.45);
+}
+.skill-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.72rem 1rem;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  color: var(--muted);
+  transition: background 0.15s, color 0.15s;
+}
+.skill-nav-btn:hover { background: rgba(255,255,255,0.04); color: var(--text); }
+.skill-nav-btn.active.c-blue   { background: rgba(88,166,255,0.1);  color: var(--blue); }
+.skill-nav-btn.active.c-purple { background: rgba(188,140,255,0.1); color: var(--purple); }
+.skill-nav-btn.active.c-orange { background: rgba(255,166,87,0.1);  color: var(--orange); }
+.skill-nav-btn.active.c-green  { background: rgba(126,231,135,0.1); color: var(--green); }
+.skill-nav-btn.active.c-pink   { background: rgba(247,120,186,0.1); color: var(--pink); }
+.skill-nav-btn.active.c-red    { background: rgba(255,123,114,0.1); color: var(--red); }
+.skill-nav-icon {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--muted);
+}
+.skill-nav-btn.active .skill-nav-icon { color: inherit; }
+.skill-nav-label { flex: 1; font-size: 0.875rem; font-weight: 500; line-height: 1.3; }
+.skill-nav-count {
+  font-size: 0.68rem;
+  font-family: 'Courier New', monospace;
+  color: var(--muted);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+  padding: 0.1rem 0.45rem;
+  border-radius: 100px;
+  flex-shrink: 0;
+}
+
+.skill-panel { padding: 2rem; display: flex; flex-direction: column; }
+.skill-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.skill-panel-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.skill-panel-icon.c-blue   { background: rgba(88,166,255,0.12);  color: var(--blue);   box-shadow: 0 0 22px rgba(88,166,255,0.22); }
+.skill-panel-icon.c-purple { background: rgba(188,140,255,0.12); color: var(--purple); box-shadow: 0 0 22px rgba(188,140,255,0.22); }
+.skill-panel-icon.c-orange { background: rgba(255,166,87,0.12);  color: var(--orange); box-shadow: 0 0 22px rgba(255,166,87,0.22); }
+.skill-panel-icon.c-green  { background: rgba(126,231,135,0.12); color: var(--green);  box-shadow: 0 0 22px rgba(126,231,135,0.22); }
+.skill-panel-icon.c-pink   { background: rgba(247,120,186,0.12); color: var(--pink);   box-shadow: 0 0 22px rgba(247,120,186,0.22); }
+.skill-panel-icon.c-red    { background: rgba(255,123,114,0.12); color: var(--red);    box-shadow: 0 0 22px rgba(255,123,114,0.22); }
+.skill-panel-name { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.02em; }
+.skill-panel-name.c-blue   { color: var(--blue); }
+.skill-panel-name.c-purple { color: var(--purple); }
+.skill-panel-name.c-orange { color: var(--orange); }
+.skill-panel-name.c-green  { color: var(--green); }
+.skill-panel-name.c-pink   { color: var(--pink); }
+.skill-panel-name.c-red    { color: var(--red); }
+.skill-panel-sub { font-size: 0.76rem; color: var(--muted); font-family: 'Courier New', monospace; margin-top: 0.2rem; }
+
+.skill-panel-tags { display: flex; flex-wrap: wrap; gap: 0.65rem; }
+.skill-panel-tag {
+  padding: 0.45rem 1.1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  animation: tag-pop 0.3s cubic-bezier(.23,1,.32,1) both;
+  transition: transform 0.15s, filter 0.15s;
+  cursor: default;
+}
+.skill-panel-tag:hover { transform: translateY(-2px); filter: brightness(1.15); }
+.skill-panel-tag.c-blue   { color: var(--blue);   background: rgba(88,166,255,0.14);  border: 1px solid rgba(88,166,255,0.25); }
+.skill-panel-tag.c-purple { color: var(--purple); background: rgba(188,140,255,0.14); border: 1px solid rgba(188,140,255,0.25); }
+.skill-panel-tag.c-orange { color: var(--orange); background: rgba(255,166,87,0.14);  border: 1px solid rgba(255,166,87,0.25); }
+.skill-panel-tag.c-green  { color: var(--green);  background: rgba(126,231,135,0.14); border: 1px solid rgba(126,231,135,0.25); }
+.skill-panel-tag.c-pink   { color: var(--pink);   background: rgba(247,120,186,0.14); border: 1px solid rgba(247,120,186,0.25); }
+.skill-panel-tag.c-red    { color: var(--red);    background: rgba(255,123,114,0.14); border: 1px solid rgba(255,123,114,0.25); }
+
+@keyframes tag-pop {
+  from { opacity: 0; transform: scale(0.85) translateY(6px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Color tokens */
+.c-blue   { color: var(--blue); }
+.c-purple { color: var(--purple); }
+.c-orange { color: var(--orange); }
+.c-green  { color: var(--green); }
+.c-pink   { color: var(--pink); }
+.c-red    { color: var(--red); }
+
+/* ── Git Log Experience ── */
+.git-log { position: relative; }
+.git-commit { display: flex; gap: 1.25rem; margin-bottom: 1.75rem; }
+.git-commit:last-child { margin-bottom: 0; }
+.git-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+.git-dot {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid rgba(88,166,255,0.35);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  z-index: 1;
+  box-shadow: 0 0 0 4px var(--bg), 0 0 16px rgba(88,166,255,0.15);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.git-commit:hover .git-dot {
+  border-color: rgba(88,166,255,0.65);
+  box-shadow: 0 0 0 4px var(--bg), 0 0 22px rgba(88,166,255,0.32);
+}
+.git-dot-initials {
+  font-family: 'Courier New', monospace;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--blue);
+  letter-spacing: 0.03em;
+}
+.git-line {
+  flex: 1;
+  width: 2px;
+  background: linear-gradient(to bottom, rgba(88,166,255,0.25), rgba(88,166,255,0.04));
+  margin: 4px 0;
+  min-height: 1.5rem;
+}
+.git-body {
+  flex: 1;
+  min-width: 0;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 1.25rem 1.5rem;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
-.skill-card:hover { border-color: rgba(88,166,255,0.38); box-shadow: 0 0 32px rgba(88,166,255,0.07); }
-.skill-lbl {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 0.875rem;
-}
-.skill-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
-.skill-tag { padding: 0.22rem 0.6rem; border-radius: 6px; font-size: 0.78rem; font-weight: 500; }
-.c-blue   { color: var(--blue);   background: rgba(88,166,255,0.12); }
-.c-purple { color: var(--purple); background: rgba(188,140,255,0.12); }
-.c-orange { color: var(--orange); background: rgba(255,166,87,0.12);  }
-.c-green  { color: var(--green);  background: rgba(126,231,135,0.12); }
-.c-pink   { color: var(--pink);   background: rgba(247,120,186,0.12); }
-.c-red    { color: var(--red);    background: rgba(255,123,114,0.12); }
-
-/* ── Timeline ── */
-.timeline { position: relative; padding-left: 2rem; }
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0.5rem; bottom: 1rem;
-  width: 2px;
-  background: linear-gradient(to bottom, var(--blue), rgba(88,166,255,0.04));
-}
-.timeline-item { position: relative; margin-bottom: 1.5rem; }
-.timeline-item::before {
-  content: '';
-  position: absolute;
-  left: -2.4rem; top: 1.15rem;
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: var(--blue);
-  box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px rgba(88,166,255,0.3), 0 0 14px rgba(88,166,255,0.35);
-}
-.exp-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.5rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-.exp-card:hover { border-color: rgba(88,166,255,0.3); box-shadow: 0 0 32px rgba(88,166,255,0.07); }
-.exp-top {
+.git-body:hover { border-color: rgba(88,166,255,0.28); box-shadow: 0 0 28px rgba(88,166,255,0.07); }
+.git-top {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 0.2rem;
 }
-.exp-co { font-weight: 700; font-size: 1rem; color: var(--text); }
-.exp-period {
-  font-size: 0.78rem; color: var(--blue);
+.git-info { display: flex; flex-direction: column; gap: 0.25rem; }
+.git-company { font-weight: 700; font-size: 1rem; color: var(--text); }
+.git-role { font-family: 'Courier New', monospace; font-size: 0.78rem; color: var(--green); }
+.git-right-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem; flex-shrink: 0; }
+.git-period {
   font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: var(--blue);
   background: rgba(88,166,255,0.1);
-  padding: 0.18rem 0.6rem; border-radius: 6px;
-  white-space: nowrap; flex-shrink: 0;
+  padding: 0.18rem 0.65rem;
+  border-radius: 6px;
+  white-space: nowrap;
 }
-.exp-role { color: var(--muted); font-size: 0.875rem; margin-bottom: 1rem; }
-.exp-list { padding-left: 1.25rem; }
-.exp-list li { color: var(--muted); font-size: 0.855rem; line-height: 1.65; margin-bottom: 0.35rem; }
-.exp-list li::marker { color: var(--blue); }
+.git-dur { font-family: 'Courier New', monospace; font-size: 0.7rem; color: var(--muted); }
+.git-diff { list-style: none; padding: 0; margin-bottom: 1rem; }
+.git-diff li {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.65;
+  margin-bottom: 0.2rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+.git-diff li::before {
+  content: '+';
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+}
+.git-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding-top: 0.875rem;
+  border-top: 1px solid var(--border);
+}
+.git-tech {
+  font-family: 'Courier New', monospace;
+  font-size: 0.71rem;
+  color: var(--orange);
+  background: rgba(255,166,87,0.08);
+  border: 1px solid rgba(255,166,87,0.2);
+  padding: 0.14rem 0.55rem;
+  border-radius: 5px;
+  transition: background 0.15s;
+}
+.git-tech:hover { background: rgba(255,166,87,0.14); }
 
 /* ── Education ── */
 .edu-card {
@@ -621,5 +765,29 @@ body {
   .photo-ring { width: 180px; height: 180px; }
   .nav-links { display: none; }
   .cube-wrap, .rings-wrap, .px { display: none; }
-  .exp-top { flex-direction: column; }
+
+  /* Skills dashboard: stack vertically */
+  .skill-dashboard { grid-template-columns: 1fr; min-height: unset; }
+  .skill-nav {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    padding: 0.6rem;
+  }
+  .skill-nav-btn { width: auto; padding: 0.45rem 0.75rem; gap: 0.5rem; border-radius: 8px; }
+  .skill-nav-label { display: none; }
+  .skill-panel { padding: 1.25rem; }
+  .skill-panel-header { margin-bottom: 1.25rem; padding-bottom: 1.25rem; }
+  .skill-panel-icon { width: 40px; height: 40px; border-radius: 10px; }
+  .skill-panel-name { font-size: 1.05rem; }
+  .skill-panel-tag { font-size: 0.8rem; padding: 0.35rem 0.85rem; }
+
+  /* Git log: tighter on mobile */
+  .git-commit { gap: 0.75rem; }
+  .git-dot { width: 38px; height: 38px; }
+  .git-dot-initials { font-size: 0.58rem; }
+  .git-top { flex-direction: column; gap: 0.5rem; }
+  .git-right-meta { align-items: flex-start; }
 }

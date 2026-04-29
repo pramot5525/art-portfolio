@@ -1,21 +1,33 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+
+const colorMap: Record<string, string> = {
+  'c-blue':   '#58a6ff',
+  'c-purple': '#bc8cff',
+  'c-orange': '#ffa657',
+  'c-green':  '#7ee787',
+  'c-pink':   '#f778ba',
+  'c-red':    '#ff7b72',
+}
 
 const skills = [
-  { label: 'Backend',                color: 'c-blue',   items: ['Golang','Fiber','Gin','GORM','Node.js','TypeScript','Express','Sequelize','PHP','REST','GraphQL'] },
-  { label: 'Frontend',               color: 'c-purple', items: ['React','Next.js','Vue.js','Tailwind CSS','Bootstrap'] },
-  { label: 'Data & Messaging',       color: 'c-orange', items: ['PostgreSQL','MySQL','Redis','Kafka'] },
-  { label: 'Infrastructure & DevOps',color: 'c-green',  items: ['Docker','Kubernetes','AWS','GitHub Actions','CI/CD Pipelines','Prometheus'] },
-  { label: 'Testing & Quality',      color: 'c-pink',   items: ['Testify','Mockery','Sinon','Chai','Unit Testing'] },
-  { label: 'Core Competencies',      color: 'c-red',    items: ['Microservices Architecture','System Design','AI-Augmented Dev','Root Cause Analysis'] },
+  { label: 'Backend',                color: 'c-blue',   icon: 'server',   items: ['Golang','Fiber','Gin','GORM','Node.js','TypeScript','Express','Sequelize','PHP','REST','GraphQL'] },
+  { label: 'Frontend',               color: 'c-purple', icon: 'layout',   items: ['React','Next.js','Vue.js','Tailwind CSS','Bootstrap'] },
+  { label: 'Data & Messaging',       color: 'c-orange', icon: 'database', items: ['PostgreSQL','MySQL','Redis','Kafka'] },
+  { label: 'Infrastructure & DevOps',color: 'c-green',  icon: 'cloud',    items: ['Docker','Kubernetes','AWS','GitHub Actions','CI/CD Pipelines','Prometheus'] },
+  { label: 'Testing & Quality',      color: 'c-pink',   icon: 'shield',   items: ['Testify','Mockery','Sinon','Chai','Unit Testing'] },
+  { label: 'Core Competencies',      color: 'c-red',    icon: 'zap',      items: ['Microservices Architecture','System Design','AI-Augmented Dev','Root Cause Analysis'] },
 ]
 
 const experiences = [
   {
     company: 'BetterBe Marketplace Co., Ltd. (NocNoc)',
+    initials: 'BB',
     role: 'Software Engineer',
     period: 'Jul 2024 – Jan 2026',
+    duration: '1.5 yrs',
+    tech: ['Go', 'Kafka', 'Kubernetes', 'Prometheus', 'PostgreSQL', 'Redis', 'Docker'],
     items: [
       'Led strategic migration of legacy services from Node.js to Golang, enhancing concurrency for compute-intensive tasks',
       'Designed event-driven workflows with Kafka for high-throughput, reliable microservice communication',
@@ -27,8 +39,11 @@ const experiences = [
   },
   {
     company: 'Tridept Co., Ltd.',
+    initials: 'TR',
     role: 'Senior Full Stack Developer',
     period: 'Oct 2021 – Jun 2024',
+    duration: '2.7 yrs',
+    tech: ['Go', 'Next.js', 'GraphQL', 'PostgreSQL', 'GitHub Actions', 'Docker'],
     items: [
       'Architected high-performance web applications using Golang (backend) and Next.js (frontend)',
       'Led PRYWAN and Vespisti ID e-commerce platforms with product catalogs, carts, and payment gateway integrations',
@@ -38,8 +53,11 @@ const experiences = [
   },
   {
     company: 'WeeklyOrder (Startup)',
+    initials: 'WO',
     role: 'Full Stack Developer',
     period: 'Aug 2020 – Sep 2021',
+    duration: '13 mos',
+    tech: ['Go', 'GraphQL', 'WebSocket', 'Vue.js', 'MySQL'],
     items: [
       'Developed real-time container tracking system using Golang and GraphQL for logistics visibility',
       'Engineered WebSocket-based chat module for seamless user-support communication',
@@ -48,8 +66,11 @@ const experiences = [
   },
   {
     company: '23 Perspective Co., Ltd.',
+    initials: '23',
     role: 'Software Engineer',
     period: 'Jul 2016 – Jul 2020',
+    duration: '4 yrs',
+    tech: ['PHP', 'Nuxt.js', 'Vue.js', 'MySQL', 'Codeigniter', 'JavaScript'],
     items: [
       'Built enterprise web solutions for PTT Blue Card, Tourism Thailand, and Ocean Property',
       'Engineered a comprehensive e-commerce marketplace for Srimuang Market',
@@ -59,8 +80,11 @@ const experiences = [
   },
   {
     company: 'YMMY Co., Ltd.',
+    initials: 'YM',
     role: 'Co-Operative Education — iOS Developer',
     period: 'Jun 2015 – Dec 2015',
+    duration: '6 mos',
+    tech: ['Objective-C', 'iOS', 'Xcode'],
     items: [
       'Developed native iOS applications using Objective-C and Xcode',
       'Top 10 Finalist in the Krungsri Uni Startup 2015 competition',
@@ -78,8 +102,62 @@ function IcoLinkedin() {
   return <svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg>
 }
 
+function IconServer() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/>
+      <circle cx="6" cy="6" r="1.2" fill="currentColor" stroke="none"/><circle cx="6" cy="18" r="1.2" fill="currentColor" stroke="none"/>
+    </svg>
+  )
+}
+function IconLayout() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="3" width="20" height="18" rx="2"/><path d="M2 9h20"/><path d="M9 21V9"/>
+    </svg>
+  )
+}
+function IconDatabase() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v6c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 11v6c0 1.66 4.03 3 9 3s9-1.34 9-3v-6"/>
+    </svg>
+  )
+}
+function IconCloud() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+    </svg>
+  )
+}
+function IconShield() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
+    </svg>
+  )
+}
+function IconZap() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+    </svg>
+  )
+}
+function SkillIcon({ type }: { type: string }) {
+  if (type === 'server')   return <IconServer />
+  if (type === 'layout')   return <IconLayout />
+  if (type === 'database') return <IconDatabase />
+  if (type === 'cloud')    return <IconCloud />
+  if (type === 'shield')   return <IconShield />
+  return <IconZap />
+}
+
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  const [activeSkill, setActiveSkill] = useState(0)
 
   /* ── Particle network ── */
   useEffect(() => {
@@ -383,18 +461,44 @@ export default function Home() {
           <div className="section-tag">// technical_skills</div>
           <h2 className="section-title">What I Work With</h2>
         </div>
-        <div className="skills-grid">
-          {skills.map((cat, i) => (
-            <div key={cat.label} className="skill-card tilt-card reveal"
-              style={{ transitionDelay: `${i * 70}ms` }}>
-              <div className={`skill-lbl ${cat.color}`}>{cat.label}</div>
-              <div className="skill-tags">
-                {cat.items.map(item => (
-                  <span key={item} className={`skill-tag ${cat.color}`}>{item}</span>
-                ))}
+        <div className="skill-dashboard reveal">
+          <nav className="skill-nav">
+            {skills.map((cat, i) => (
+              <button
+                key={cat.label}
+                className={`skill-nav-btn${activeSkill === i ? ` active ${cat.color}` : ''}`}
+                onClick={() => setActiveSkill(i)}
+              >
+                <div className="skill-nav-icon"><SkillIcon type={cat.icon} /></div>
+                <span className="skill-nav-label">{cat.label}</span>
+                <span className="skill-nav-count">{cat.items.length}</span>
+              </button>
+            ))}
+          </nav>
+          <div className="skill-panel">
+            <div className="skill-panel-header">
+              <div className={`skill-panel-icon ${skills[activeSkill].color}`}>
+                <SkillIcon type={skills[activeSkill].icon} />
+              </div>
+              <div>
+                <div className={`skill-panel-name ${skills[activeSkill].color}`}>
+                  {skills[activeSkill].label}
+                </div>
+                <div className="skill-panel-sub">{skills[activeSkill].items.length} technologies</div>
               </div>
             </div>
-          ))}
+            <div className="skill-panel-tags">
+              {skills[activeSkill].items.map((item, j) => (
+                <span
+                  key={item}
+                  className={`skill-panel-tag ${skills[activeSkill].color}`}
+                  style={{ animationDelay: `${j * 45}ms` }}
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -404,19 +508,30 @@ export default function Home() {
           <div className="section-tag">// professional_experience</div>
           <h2 className="section-title">Where I&apos;ve Worked</h2>
         </div>
-        <div className="timeline">
+        <div className="git-log">
           {experiences.map((exp, i) => (
-            <div key={exp.company} className="timeline-item reveal"
-              style={{ transitionDelay: `${i * 80}ms` }}>
-              <div className="exp-card tilt-card">
-                <div className="exp-top">
-                  <span className="exp-co">{exp.company}</span>
-                  <span className="exp-period">{exp.period}</span>
+            <div key={exp.company} className="git-commit reveal" style={{ transitionDelay: `${i * 80}ms` }}>
+              <div className="git-left">
+                <div className="git-dot"><span className="git-dot-initials">{exp.initials}</span></div>
+                {i < experiences.length - 1 && <div className="git-line" />}
+              </div>
+              <div className="git-body tilt-card">
+                <div className="git-top">
+                  <div className="git-info">
+                    <span className="git-company">{exp.company}</span>
+                    <span className="git-role"># {exp.role}</span>
+                  </div>
+                  <div className="git-right-meta">
+                    <span className="git-period">{exp.period}</span>
+                    <span className="git-dur">{exp.duration}</span>
+                  </div>
                 </div>
-                <div className="exp-role">{exp.role}</div>
-                <ul className="exp-list">
+                <ul className="git-diff">
                   {exp.items.map((h, j) => <li key={j}>{h}</li>)}
                 </ul>
+                <div className="git-stack">
+                  {exp.tech.map(t => <span key={t} className="git-tech">{t}</span>)}
+                </div>
               </div>
             </div>
           ))}
