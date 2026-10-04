@@ -18,14 +18,15 @@ type Entry = {
   role: string
   kind: 'work' | 'study'
   start: YearMonth
-  /** Leave out for the current role; it then runs to the build date and reads "Present" */
-  end?: YearMonth
-  /** Length as the owner states it (past roles only); the period text is derived */
-  duration?: string
   /** A role with no items shows as a plain row with nothing to open */
   items: string[]
   tech?: string[]
-}
+} & (
+  /** Past role: the length is as the owner states it; the period text is derived */
+  | { end: YearMonth; duration: string }
+  /** Current role: no end, so it runs to the build date and reads "Present" */
+  | { end?: undefined; duration?: undefined }
+)
 
 const entries: Entry[] = [
   {
@@ -147,8 +148,14 @@ const skills = [
 
 // "Now" is captured when the static site is built; every deploy rebuilds it,
 // so the current role's bar grows with each push.
-const built = new Date()
-const NOW: YearMonth = [built.getFullYear(), built.getMonth() + 1]
+// Taken in Bangkok time: the CI runner is on UTC, which is still the previous
+// month for the first seven hours of the 1st.
+const built = Object.fromEntries(
+  new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Bangkok', year: 'numeric', month: 'numeric' })
+    .formatToParts(new Date())
+    .map(part => [part.type, part.value]),
+)
+const NOW: YearMonth = [Number(built.year), Number(built.month)]
 const endOf = (entry: Entry): YearMonth => entry.end ?? NOW
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -253,7 +260,7 @@ export default function Home() {
               Most people call me Art.
             </p>
             <p>
-              I build backend systems in Go and Node.js for e-commerce and logistics: event-driven
+              I’ve built backend systems in Go and Node.js for e-commerce and logistics: event-driven
               services on Kafka, API contracts frontend teams can rely on, and monitoring that catches
               slow endpoints early. Before KTC, at NocNoc, I led the migration of legacy services
               from Node.js to Go.
@@ -284,7 +291,11 @@ export default function Home() {
             </div>
 
             {entries.map(entry => {
-              const className = entry.kind === 'study' ? 'job job--study' : 'job'
+              const className = [
+                'job',
+                entry.kind === 'study' && 'job--study',
+                !entry.end && 'job--current',
+              ].filter(Boolean).join(' ')
               const head = (
                 <>
                   <span className="job-who">
@@ -353,7 +364,7 @@ export default function Home() {
       </main>
 
       <footer className="footer">
-        <p>© 2026 Pramot Natemanee, Bangkok</p>
+        <p>© {NOW[0]} Pramot Natemanee, Bangkok</p>
         <p className="footer-links">
           <ExternalLink href={GITHUB}>GitHub</ExternalLink>
           <ExternalLink href={LINKEDIN}>LinkedIn</ExternalLink>

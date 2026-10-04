@@ -359,7 +359,8 @@ summary.job-head:focus-visible { outline-offset: 0; }
 .job-bar {
   position: absolute;
   top: 50%;
-  left: var(--from);
+  /* A very short bar is held at min-width; keep it from running off the track */
+  left: min(var(--from), 100% - 0.75rem);
   width: var(--span);
   min-width: 0.75rem;
   height: 0.75rem;
@@ -371,6 +372,11 @@ summary.job-head:focus-visible { outline-offset: 0; }
 .job--study .job-bar {
   background: transparent;
   box-shadow: inset 0 0 0 2px var(--ink);
+}
+/* Still running: a flat leading edge at "now" instead of a rounded end */
+.job--current .job-bar {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
 }
 .job[open] .job-bar {
   background: var(--taxi);
@@ -627,6 +633,9 @@ summary.job-head:focus-visible { outline-offset: 0; }
 @media print {
   .job::details-content { content-visibility: visible; block-size: auto; }
   .job-toggle { display: none; }
+  /* Every row is expanded on paper, so no bar should look selected */
+  .job[open] .job-bar { background: var(--ink); height: 0.75rem; }
+  .job--study[open] .job-bar { background: transparent; box-shadow: inset 0 0 0 2px var(--ink); }
   /* Not the gridline gradients: forced into a PDF, some viewers paint them as solid blocks */
   .job-bar,
   .button {
